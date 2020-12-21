@@ -144,4 +144,6 @@ void menu(RenderWindow& window) {
 
 		window.display();
 	}
+	
+	window.clear();
 }
