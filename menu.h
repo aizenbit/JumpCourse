@@ -8,140 +8,184 @@ using namespace sf;
 
 
 void menu(RenderWindow& window) {
-	Texture menuTexture1, menuTexture2, menuTexture3, menuBack, aboutTexture, menuBackground, startTexture, hardTexture, easyTexture, gmTexture;
-
-	menuTexture1.loadFromFile("menu/startgame.png");
-	menuTexture2.loadFromFile("menu/settings.png");
-	menuTexture3.loadFromFile("menu/exit.png");
+	Texture startgamebutton, settingsbutton, exitbutton, menuBack, settingsmenu, menuBackground, startmenu, gamemode;
+	startgamebutton.loadFromFile("menu/startgame.png");
+	settingsbutton.loadFromFile("menu/settings.png");
+	exitbutton.loadFromFile("menu/exit.png");
 	menuBack.loadFromFile("menu/back.png");
-	aboutTexture.loadFromFile("menu/settingsmenu2.png");
+	settingsmenu.loadFromFile("menu/settingsmenu2.png");
 	menuBackground.loadFromFile("menu/backgroundMenu2.png");
-	startTexture.loadFromFile("menu/startmenu.png");
-	hardTexture.loadFromFile("menu/hard.png");
-	easyTexture.loadFromFile("menu/easy.png");
-	gmTexture.loadFromFile("menu/gamemode.png");
-	Sprite menu1(menuTexture1), menu2(menuTexture2), menu3(menuTexture3), back(menuBack), about(aboutTexture), menuBg(menuBackground), startmenu(startTexture), hard(hardTexture), easy(easyTexture), gm(gmTexture);
-	bool isMenu = 1, start = 1, Set = 0;
-	bool gamemode = false, MousePressed = false;
-	int menuNum = 0;
-	menu1.setPosition(555, 350);
-	menu2.setPosition(555, 400);
-	menu3.setPosition(555, 450);
-	back.setPosition(555, 650);
-	hard.setPosition(555, 450);
-	easy.setPosition(555, 550);
-	gm.setPosition(555, 450);
+	startmenu.loadFromFile("menu/startmenu.png");
+	gamemode.loadFromFile("menu/gamemode.png");
+	Sprite Sstartgamebutton(startgamebutton), Ssettingsbutton(settingsbutton), Sexitbutton(exitbutton), Sbackbutton(menuBack), Ssettingsmenu(settingsmenu), menuBg(menuBackground), Sstartmenu(startmenu), Sgamemode(gamemode);
+	bool isMenuStart = 1;
+	bool isMenu = 0;
+	bool isMenuSettings = 0;
+	bool spacepressed = 0;
+	bool mousepressed = 0;
+	bool gamemodeHE = false;
+	Sstartgamebutton.setPosition(555, 350);
+	Ssettingsbutton.setPosition(555, 400);
+	Sexitbutton.setPosition(555, 450);
+	Sbackbutton.setPosition(555, 650);
+	Ssettingsmenu.setPosition(0, 0);
 	menuBg.setPosition(0, 0);
-	startmenu.setPosition(0, 0);
-
-
+	Sstartmenu.setPosition(0, 0);
+	Sgamemode.setPosition(555, 450);
 
 	Music music;
 	music.openFromFile("sounds/menu.ogg");
-	music.setVolume(5.f);
+	music.setVolume(50.f);
 	music.play();
 	music.setLoop(true);
 
 	SoundBuffer clickbuffer;
 	clickbuffer.loadFromFile("sounds/click.ogg");
 	Sound click(clickbuffer);
-	click.setVolume(50.f);
-	while (start) {
+	click.setVolume(40.f);
 
+	while (isMenuStart) {
+		Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				window.close();
+		}
+		//if (!Keyboard::isKeyPressed(Keyboard::Escape)) { isMenuStart = 1 ;}
 
-		if (Keyboard::isKeyPressed(Keyboard::Space)) { isMenu = 1; start = 0; click.play(); }
-		window.clear();
-		window.draw(startmenu);
-		window.display();
+		if (Keyboard::isKeyPressed(Keyboard::Space)) {
+			spacepressed = true;
+		}
+		if (!Keyboard::isKeyPressed(Keyboard::Space)) {
+			if (spacepressed) {
+				click.play();
+				isMenu = true;
+				isMenuStart = false;
+				spacepressed = false;
+			}
+			window.clear();
+			window.draw(Sstartmenu);
+			window.display();
+		}
 	}
 
-	while (isMenu)
-	{
-
-		menu1.setColor(Color::White);
-		menu2.setColor(Color::White);
-		menu3.setColor(Color::White);
-
-		menuNum = 0;
-
-		window.clear(Color(129, 181, 221));
-
-
-
-		if (!Keyboard::isKeyPressed(Keyboard::Escape)) { isMenu = 1; }
-
-
-
-		if (IntRect(555, 350, 169, 39).contains(Mouse::getPosition(window))) { menu1.setColor(Color::Red); menuNum = 1; }
-		if (IntRect(555, 400, 169, 39).contains(Mouse::getPosition(window))) { menu2.setColor(Color::Red); menuNum = 2; }
-		if (IntRect(555, 450, 169, 39).contains(Mouse::getPosition(window))) { menu3.setColor(Color::Red); menuNum = 3; }
-
-
-		if (Mouse::isButtonPressed(Mouse::Left))
+		while (isMenu)
 		{
-
-			if (menuNum == 1) {
-				click.play();
-
-				isMenu = false;
-			}
-			if (menuNum == 2) {
-				click.play();
-				Set = 1;
-				isMenu = false;
-
-
-
-			}
-			if (menuNum == 3) { click.play(); window.close(); isMenu = false; }
-
-		}
-		while (Set) {
-			back.setColor(Color::White);
-			if (IntRect(555, 650, 169, 39).contains(Mouse::getPosition(window))) {
-				back.setColor(Color::Red);
-				if (Mouse::isButtonPressed(Mouse::Left)) {
-					click.play();
-					Set = 0;
-					isMenu = 1;
-				}
-			}
-			gm.setColor(Color::White);
-			if (IntRect(555, 450, 169, 39).contains(Mouse::getPosition(window)))
+			Event event;
+			while (window.pollEvent(event))
 			{
-				gm.setColor(Color::Red);
-				if (Mouse::isButtonPressed(Mouse::Left)) {
-					MousePressed = true;
-				}
-				if (!Mouse::isButtonPressed(Mouse::Left) && MousePressed) {
-					if (MousePressed) { click.play(); }
-					if (gamemode) { gamemode = false; MousePressed = false; }
-					else if (!gamemode) { gamemode = true; MousePressed = false; }
-				}
+				if (event.type == Event::Closed)
+					window.close();
 			}
 
+			Sstartgamebutton.setColor(Color::White);
+			Ssettingsbutton.setColor(Color::White);
+			Sexitbutton.setColor(Color::White);
 
-
-			if (!gamemode) { gm.setTextureRect(IntRect(0, 0, 169, 39)); }
-			if (gamemode) { gm.setTextureRect(IntRect(169, 0, 169, 39)); }
-			
 			window.clear();
+			//if (!Keyboard::isKeyPressed(Keyboard::Escape)) { isMenu = 1; }
 
-			window.draw(about);
-			window.draw(back);
-			window.draw(gm);
+			//кнопкa start
+			if (IntRect(555, 350, 169, 39).contains(Mouse::getPosition(window))) 
+				{
+					Sstartgamebutton.setColor(Color::Red);  
+						if (Mouse::isButtonPressed(Mouse::Left)) {
+								isMenu = false;
+							}
+				}
+			//кнопкa settings
+			if (IntRect(555, 400, 169, 39).contains(Mouse::getPosition(window)))
+			{
+				Ssettingsbutton.setColor(Color::Red);
+				if (Mouse::isButtonPressed(Mouse::Left)) {
+					mousepressed = true;
+				}
+				if (!Mouse::isButtonPressed(Mouse::Left)) {
+					if (mousepressed) {
+						click.play();
+						isMenuSettings = true;
+						isMenu = false;
+					}
+					mousepressed = false;
+				}
+			}
+			//кнопкa exit
+			if (IntRect(555, 450, 169, 39).contains(Mouse::getPosition(window)))
+			{ 
+				Sexitbutton.setColor(Color::Red);
+					if (Mouse::isButtonPressed(Mouse::Left)) {
+						window.close(); isMenu = false;
+					}
+			}
+			// РАЗДЕЛ МЕНЮ НАСТРОЕК
+			while (isMenuSettings) {
+				while (window.pollEvent(event))
+				{
+					if (event.type == Event::Closed)
+						window.close();
+				}
+
+				Sbackbutton.setColor(Color::White);
+				Sgamemode.setColor(Color::White);
+
+				if (IntRect(555, 650, 169, 39).contains(Mouse::getPosition(window)))
+				{
+					Sbackbutton.setColor(Color::Red);
+					if (Mouse::isButtonPressed(Mouse::Left)) {
+						mousepressed = true;
+					}
+					if (!Mouse::isButtonPressed(Mouse::Left)) {
+						if (mousepressed) {
+							isMenu = true;
+							isMenuSettings = false;
+
+							click.play();
+						}
+						mousepressed = false;
+					}
+
+				}
+				// КНОПКА ПЕРЕКЛЮЧЕНИЯ ГЕЙММОДА 
+				if (IntRect(555, 450, 169, 39).contains(Mouse::getPosition(window))) // ЕСЛИ КУРСОР В ГРАНИЦЕ КНОПКИ, ОНА -->
+				{
+					Sgamemode.setColor(Color::Red);  // --> СТАНОВИТСЯ КРАСНОЙ
+
+					if (Mouse::isButtonPressed(Mouse::Left)) {   // ЕСЛИ ЛЕВАЯ КНОПКА НАЖАТА, ТО -->
+						mousepressed = true; // ПЕРЕМЕННАЯ "КНОПКА НАЖАТА = 1 "
+					}
+					if (!Mouse::isButtonPressed(Mouse::Left) && mousepressed) {  // ЕСЛИ КНОПКА БЫЛА НАЖАТА ТО ->
+						 click.play();  // --> ИГРАЕТ ЗВУК
+						if (gamemodeHE) { gamemodeHE = false; mousepressed = false; } // ЕСЛИ GAMEMODE = 1, ТО СТАНОВИТСЯ = 0, КНОПКА ОТЖАТА
+						else if (!gamemodeHE) { gamemodeHE = true; mousepressed = false; } // ЕСЛИ GAMEMODE = 0, ТО СТАНОВИТСЯ = 1, КНОПКА ОТЖАТА
+					}
+				}
+				if (!gamemodeHE) { Sgamemode.setTextureRect(IntRect(0, 0, 169, 39)); } // ЕСЛИ GAMEMODE = 0 ТО ПОКАЗЫВАЕТСЯ СПРАЙТ EASY
+				if (gamemodeHE) { Sgamemode.setTextureRect(IntRect(169, 0, 169, 39)); } // ЕСЛИ GAMEMODE = 1 ТО ПОКАЗЫВАЕТСЯ СПРАЙТ HARD
+
+				window.clear();
+				window.draw(Ssettingsmenu);
+				window.draw(Sbackbutton);
+				window.draw(Sgamemode);
+				window.display();
+
+
+
+			}
+			// КОНЕЦ РАЗДЕЛА НАСТРОЕК
+
+
+			window.draw(menuBg);
+
+			window.draw(Sstartgamebutton);
+			window.draw(Ssettingsbutton);
+			window.draw(Sexitbutton);
+
+
 
 			window.display();
 		}
+		
 
-		window.clear();
-
-		window.draw(menuBg);
-
-		window.draw(menu1);
-		window.draw(menu2);
-		window.draw(menu3);
-
-		window.display();
-	}
+	
+	window.clear();
 }
