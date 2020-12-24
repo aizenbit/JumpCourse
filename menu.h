@@ -23,7 +23,7 @@ void menu(RenderWindow& window) {
 	bool isMenuSettings = 0;
 	bool spacepressed = 0;
 	bool mousepressed = 0;
-	bool gamemodeHE = false;
+	bool gamemodeInGame = false;
 	Sstartgamebutton.setPosition(555, 350);
 	Ssettingsbutton.setPosition(555, 400);
 	Sexitbutton.setPosition(555, 450);
@@ -155,12 +155,12 @@ void menu(RenderWindow& window) {
 					}
 					if (!Mouse::isButtonPressed(Mouse::Left) && mousepressed) {  // ЕСЛИ КНОПКА БЫЛА НАЖАТА ТО ->
 						 click.play();  // --> ИГРАЕТ ЗВУК
-						if (gamemodeHE) { gamemodeHE = false; mousepressed = false; } // ЕСЛИ GAMEMODE = 1, ТО СТАНОВИТСЯ = 0, КНОПКА ОТЖАТА
-						else if (!gamemodeHE) { gamemodeHE = true; mousepressed = false; } // ЕСЛИ GAMEMODE = 0, ТО СТАНОВИТСЯ = 1, КНОПКА ОТЖАТА
+						if (gamemodeInGame) { gamemodeInGame = false; mousepressed = false; } // ЕСЛИ GAMEMODE = 1, ТО СТАНОВИТСЯ = 0, КНОПКА ОТЖАТА
+						else if (!gamemodeInGame) { gamemodeInGame = true; mousepressed = false; } // ЕСЛИ GAMEMODE = 0, ТО СТАНОВИТСЯ = 1, КНОПКА ОТЖАТА
 					}
 				}
-				if (!gamemodeHE) { Sgamemode.setTextureRect(IntRect(0, 0, 169, 39)); } // ЕСЛИ GAMEMODE = 0 ТО ПОКАЗЫВАЕТСЯ СПРАЙТ EASY
-				if (gamemodeHE) { Sgamemode.setTextureRect(IntRect(169, 0, 169, 39)); } // ЕСЛИ GAMEMODE = 1 ТО ПОКАЗЫВАЕТСЯ СПРАЙТ HARD
+				if (!gamemodeInGame) { Sgamemode.setTextureRect(IntRect(0, 0, 169, 39)); } // ЕСЛИ GAMEMODE = 0 ТО ПОКАЗЫВАЕТСЯ СПРАЙТ EASY
+				if (gamemodeInGame) { Sgamemode.setTextureRect(IntRect(169, 0, 169, 39)); } // ЕСЛИ GAMEMODE = 1 ТО ПОКАЗЫВАЕТСЯ СПРАЙТ HARD
 
 				window.clear();
 				window.draw(Ssettingsmenu);
