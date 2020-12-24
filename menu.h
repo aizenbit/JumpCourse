@@ -4,10 +4,14 @@
 
 using namespace sf;
 
+struct ExampleMenuData
+{
+	int a;
+	float b;
+}
 
 
-
-void menu(RenderWindow& window) {
+void menu(RenderWindow& window, ExampleMenuData& example) {
 	Texture startgamebutton, settingsbutton, exitbutton, menuBack, settingsmenu, menuBackground, startmenu, gamemode;
 	startgamebutton.loadFromFile("menu/startgame.png");
 	settingsbutton.loadFromFile("menu/settings.png");
@@ -146,6 +150,8 @@ void menu(RenderWindow& window) {
 
 				}
 				// КНОПКА ПЕРЕКЛЮЧЕНИЯ ГЕЙММОДА 
+				example.a = 1;
+				example b = 0.5f;
 				if (IntRect(555, 450, 169, 39).contains(Mouse::getPosition(window))) // ЕСЛИ КУРСОР В ГРАНИЦЕ КНОПКИ, ОНА -->
 				{
 					Sgamemode.setColor(Color::Red);  // --> СТАНОВИТСЯ КРАСНОЙ
