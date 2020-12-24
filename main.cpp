@@ -26,7 +26,7 @@ public:
 	PLAYER(Texture& image)
 	{
 		sprite.setTexture(image);
-		rect = FloatRect(6 * 64, 190 * 64, 64, 64);  // 8 130 // 6 190  // 10 100
+		rect = FloatRect(8 * 64, 190 * 64, 64, 64);  // 8 130 // 6 190  // 10 100
 		dx = dy = 0;
 		currentFrame = 0;
 	}
@@ -143,17 +143,9 @@ public:
 int main()
 {
 	RenderWindow window(VideoMode(1280, 768), "Jump Dick"); // 1280x768 = 20x12*5= 20x60
-	
-
 	Clock clock;
 
-	
-
-
-
-
-
-
+	menu(window);  // ОТРИСОВКА МЕНЮ
 
 
 	RectangleShape soundbottom(Vector2f(40, 40));
@@ -302,7 +294,7 @@ int main()
 	if (Test2) { cout << "3" << endl; };
 	if (!Test2) { cout << "4" << endl; };
 	*/
-	menu(window);
+
 
 	music.play();
 
@@ -315,9 +307,9 @@ int main()
 		clock.restart();
 		time = time / 800;
 
+		
 
 
-		//if (Keyboard::isKeyPressed(Keyboard::Tab)) {  sleep;}
 
 		// ---------------------------------------------------------
 		Vector2i mousePosition = Mouse::getPosition(window);
@@ -531,7 +523,7 @@ int main()
 
 		window.display();
 
-
+	
 
 	}
 
