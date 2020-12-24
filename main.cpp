@@ -145,7 +145,15 @@ int main()
 	RenderWindow window(VideoMode(1280, 768), "Jump Dick"); // 1280x768 = 20x12*5= 20x60
 	Clock clock;
 
-	menu(window);  // ОТРИСОВКА МЕНЮ
+	ExampleMenuData exampleData;
+	
+	exampleData.a = 10;
+	exampleData.b = 10.10f;
+	cout << exampleData.a << " " << exampleData.b; //10 10.1
+	
+	menu(window, exampleData);  // ОТРИСОВКА МЕНЮ
+	
+	cout << exampleData.a << " " << exampleData.b; //1 0.5
 
 
 	RectangleShape soundbottom(Vector2f(40, 40));
